@@ -1,8 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   background: #dedede;
 }
@@ -10,6 +5,18 @@ body {
 header {
   background: #222;
   color: #FFF;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding: 15px;
+}
+
+header h1 {
+  font-size: 1.8em;
+}
+
+.form-connection {
+  padding: 15px;
+  margin-top: 2%;
+}
+
+#connection-status {
+  display: none;
 }

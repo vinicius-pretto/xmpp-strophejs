@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>XMPP Strophe.js Sample</title>
 
+  <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -13,7 +14,31 @@
     <h1>Strophe.js</h1>
   </header>
 
+  <div class="container">
+    <form class="form-connection">
+      <div id="connection-status" role="alert">Connection <span id="status"></span></div>
+      
+      <div class="form-group">
+        <label for="from">From</label>
+        <input id="from" type="text" class="form-control" placeholder="name@domain (jid)" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" class="form-control" placeholder="password" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="server-url">WebSocket / Bosh Server URL</label>
+        <input id="server-url" type="text" class="form-control" placeholder="ex: ws://localhost:5280/ws" required>
+      </div>
+
+      <button id="connection" class="btn btn-primary">Connect</button>
+    </form>
+  </div>
+
   <script src="/js/lib/strophe.js"></script>
+  <script src="/js/connection.js"></script>
   <script src="/js/index.js"></script>
 </body>
 </html>
