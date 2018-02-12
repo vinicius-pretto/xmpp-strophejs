@@ -12,7 +12,7 @@ function messageHandler(message) {
 }
 
 $('#connection')
-  .addEventListener('click', (event) => {
+  .addEventListener('click', (evt) => {
     const jid = $('#from').value;
     const password = $('#password').value;
     const serverUrl = $('#server-url').value;
