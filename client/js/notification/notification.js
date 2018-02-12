@@ -1,7 +1,4 @@
-const NotificationPermission = Object.freeze({
-  GRANTED: 'granted',
-  DENIED: 'denied'
-});
+import NotificationPermission from './notification-permission.enum';
 
 function DesktopNotification() {
   function show(message) {
