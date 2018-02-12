@@ -33,3 +33,5 @@ function DesktopNotification() {
     show: show
   }
 }
+
+module.exports = DesktopNotification;

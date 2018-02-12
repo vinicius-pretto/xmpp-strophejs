@@ -1,3 +1,7 @@
+import { $msg } from 'strophe.js';
+import startConnection from './connection';
+import DesktopNotification from './notification';
+
 const $ = (elem) => document.querySelector(elem);
 let connection;
 

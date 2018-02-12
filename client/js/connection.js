@@ -1,3 +1,7 @@
+import { Strophe, $pres } from 'strophe.js';
+
+const $ = (elem) => document.querySelector(elem);
+
 function showConnectionMessage(status) {
   const message = status === 'success' ? 'Successfull' : 'Unsuccessful';
   $('#connection-status #status').innerHTML = message;
@@ -41,3 +45,5 @@ function startConnection(evt, handler) {
 
   return connection;
 }
+
+module.exports = startConnection;
