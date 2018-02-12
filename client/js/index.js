@@ -1,6 +1,7 @@
-import { $msg } from 'strophe.js';
-import startConnection from './connection';
-import DesktopNotification from './notification';
+import XmppConnection from './xmpp/xmpp.connection';
+import DesktopNotification from './notification/notification';
+import MessageService from './message/message.service';
+import MessageController from './message/message.controller';
 
 const $ = (elem) => document.querySelector(elem);
 let connection;
@@ -10,28 +11,22 @@ function messageHandler(message) {
   return true;
 }
 
-function onSendMessage(evt, connection) {
-  evt.preventDefault();
-
-  const body = $('#message').value;
-  const from = $('#from').value;
-  const to = $('#to').value;
-  const params = { 
-    to: to, 
-    from: from, 
-    type: 'chat' 
-  }
-  const message = $msg(params)
-    .c('body')
-    .t(body);
-  connection.send(message)
-}
-
 $('#connection')
-  .addEventListener('click', (evt) => {
-    connection = startConnection(evt, messageHandler);
+  .addEventListener('click', (event) => {
+    const jid = $('#from').value;
+    const password = $('#password').value;
+    const serverUrl = $('#server-url').value;
+    connection = new XmppConnection(jid, password, serverUrl, messageHandler).getConnection();
+
+    const messageService = new MessageService(connection);  
+    const messageController = new MessageController(messageService);
+
+    $('#send-message')
+      .addEventListener('click', (e) => {
+        const to = $('#to').value;
+        const message = $('#message').value;
+        messageController.sendMessage(jid, to, message);
+      });
   });
 
-$('#send-message')
-  .addEventListener('click', (evt) => onSendMessage(evt, connection));
 
