@@ -5,31 +5,9 @@ function showConnectionMessage(status) {
   const connnectionStatusMesssage = $('#connection-status');
   connnectionStatusMesssage.className += `alert alert-${status}`;
   connnectionStatusMesssage.style.display = 'block';
-  showMessageForm();
 }
 
-function showMessageForm() {
-  function buildMessageForm() {
-    return `
-      <form class="form-message">
-        <div class="form-group">
-          <label for="to">To</label>
-          <input id="to" type="text" class="form-control" placeholder="name@domain (jid)" required>
-        </div>
-  
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea name="message" id="message" rows="3" class="form-control" placeholder="Write here your message.."></textarea>
-        </div>
-        <button class="btn btn-primary">Send message</button>
-      </form>
-    `
-  }
-
-  $('.container').innerHTML += buildMessageForm();
-}
-
-function startConnection(evt) {
+function startConnection(evt, handler) {
   evt.preventDefault();
 
   const jid = $('#from').value;
@@ -47,8 +25,19 @@ function startConnection(evt) {
       showConnectionMessage('danger');
     }
     else if (status === Strophe.Status.CONNECTED) {
+      const namespace = null;
+      const name = 'message';
+      const type = null;
+      const id = null;
+      const from = null;
+      connection.addHandler(handler, namespace, name, type, id, from);
+      connection.send($pres().tree());
+      
       console.log(`Connection stablished with Ejabberd, statusCode: ${status}`)
       showConnectionMessage('success');
+      $('#form-message').style.display = 'block';
     }
-  });  
+  });
+
+  return connection;
 }

@@ -13,11 +13,12 @@ header h1 {
 }
 
 .form-connection,
-.form-message {
+#form-message {
   padding: 15px;
   margin-top: 2%;
 }
 
+#form-message,
 #connection-status {
   display: none;
 }
