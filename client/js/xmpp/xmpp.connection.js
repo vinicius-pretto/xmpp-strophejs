@@ -1,5 +1,6 @@
 import { Strophe, $pres } from 'strophe.js';
 import vcardPlugin from './vcard/vcard.plugin';
+import VCard from './vcard/vcard';
 
 const $ = (elem) => document.querySelector(elem);
 
@@ -21,13 +22,6 @@ class XmppConnection {
     connnectionStatusMesssage.style.display = 'block';
   }
 
-  buildVCardElement() {
-    const xmlElement = Strophe.xmlElement('N')
-    const child = Strophe.xmlElement('GIVEN', 'vinicius')
-    xmlElement.appendChild(child);
-    return xmlElement;
-  }
-
   onVcardError(error) {
     console.error('Error', error);
   }
@@ -46,10 +40,13 @@ class XmppConnection {
       }
       else if (status === Strophe.Status.CONNECTED) {
         console.log(`Connection stablished with Ejabberd, statusCode: ${status}`)
-        Strophe.addConnectionPlugin('vcard', vcardPlugin);
-        const vcardElement = this.buildVCardElement();
         
-        connection.vcard.set((data) => console.log('setVcard', data), vcardElement, this.jid, (error) => console.error('setVcardError', error))
+        const vcard = new VCard();
+        vcard.setFirstName('Vinicius');
+        vcard.setLastName('Pretto');
+        vcard.setField('gender', 'male');
+    
+        connection.vcard.set((data) => console.log('setVcard', data), vcard.toXML(), this.jid, (error) => console.error('setVcardError', error))
         connection.vcard.get((data) => console.log('getVcard', data), this.jid, (error) => console.error('getVcardError', error));
 
         const namespace = null;

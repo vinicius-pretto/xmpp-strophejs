@@ -2,7 +2,6 @@ import { Strophe , $iq} from 'strophe.js';
 
 function buildIq(type, jid, vCardEl) {
   const iq = $iq(jid ? {type: type, to: jid} : {type: type});
-  iq.c("vCard", { xmlns: Strophe.NS.VCARD });
   if (vCardEl) {
     iq.cnode(vCardEl);
   }
@@ -18,7 +17,8 @@ const vcardPlugin = {
   },
 
   get: function(handlerCallback, jid, errorCallback) {
-    const iq = buildIq('get', jid);
+    const iq = $iq({ type: 'get', to: jid });
+    iq.c("vCard", { xmlns: 'vcard-temp' });
     return this._connection.sendIQ(iq, handlerCallback, errorCallback);
   },
 
@@ -27,5 +27,7 @@ const vcardPlugin = {
     return this._connection.sendIQ(iq, handlerCallback, errorCallback);
   }
 }
+
+Strophe.addConnectionPlugin('vcard', vcardPlugin);
 
 module.exports = vcardPlugin;
